@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block title %}Order Confirmation - TipTop Growth Service{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm border-success">
+                    <div class="card-header bg-success text-white">
+                        <h3 class="mb-0"><i class="fas fa-check-circle me-2"></i>Order Received Successfully!</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-thumbs-up fa-4x text-success mb-3"></i>
+                            <h4>Thank you for your order!</h4>
+                            <p class="lead">We've received your request and will start processing it soon.</p>
+                        </div>
+                        
+                        <h5 class="border-bottom pb-2">Customer Information</h5>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>Name:</th>
+                                        <td>{{ customer_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Email:</th>
+                                        <td>{{ customer_email }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Phone:</th>
+                                        <td>{{ customer_phone }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>WhatsApp:</th>
+                                        <td>{{ customer_whatsapp }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h5 class="border-bottom pb-2 mt-4">Order Details</h5>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>TikTok Profile Link:</th>
+                                        <td><a href="{{ profile_link }}" target="_blank">{{ profile_link }}</a></td>
+                                    </tr>
+                                    {% if followers > 0 %}
+                                    <tr>
+                                        <th>Followers:</th>
+                                        <td>{{ followers }} (PKR {{ followers * 1 }})</td>
+                                    </tr>
+                                    {% endif %}
+                                    
+                                    {% if likes > 0 %}
+                                    <tr>
+                                        <th>Likes:</th>
+                                        <td>{{ likes }} (PKR {{ (likes * 0.2)|round(2) }})</td>
+                                    </tr>
+                                    {% endif %}
+                                    
+                                    {% if comments > 0 %}
+                                    <tr>
+                                        <th>Comments:</th>
+                                        <td>
+                                            {{ comments }} {{ comment_type }} comments
+                                            {% if comment_type == 'random' %}
+                                                (PKR {{ (comments * 0.4)|round(2) }})
+                                            {% else %}
+                                                (PKR {{ comments * 1 }})
+                                                {% if custom_comment %}
+                                                <br>
+                                                <small class="text-muted">Comment text: "{{ custom_comment }}"</small>
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                    
+                                    {% if views > 0 %}
+                                    <tr>
+                                        <th>Views:</th>
+                                        <td>
+                                            {{ views }} {{ watch_time }} play views
+                                            {% if watch_time == 'random' %}
+                                                (PKR {{ (views * 0.5)|round(2) }})
+                                            {% else %}
+                                                (PKR {{ (views * 1.5)|round(2) }})
+                                                {% if custom_time > 0 %}
+                                                <br>
+                                                <small class="text-muted">Custom time: {{ custom_time }} seconds</small>
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                    
+                                    <tr>
+                                        <th>Payment Method:</th>
+                                        <td>{{ payment_method|capitalize }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Transaction ID:</th>
+                                        <td>{{ transaction_id }}</td>
+                                    </tr>
+                                    <tr class="table-active">
+                                        <th>Total Price:</th>
+                                        <td class="fw-bold">
+                                            PKR {{ price }} (exact calculation)<br>
+                                            <span class="text-success fw-bold">YOU NEED TO PAY: PKR {{ rounded_price }} (rounded up amount)</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="alert alert-warning mt-4">
+                            <h5><i class="fas fa-exclamation-triangle me-2"></i>IMPORTANT!</h5>
+                            <p><strong>Please send a screenshot of your transaction to our WhatsApp number: +92 328 4336247</strong></p>
+                            <p>Your order will NOT be processed until we receive your payment confirmation screenshot.</p>
+                        </div>
+                        
+                        <div class="alert alert-info mt-4">
+                            <h5><i class="fas fa-info-circle me-2"></i>What's Next?</h5>
+                            <p>Our team will review your order and you'll start seeing results within 24-48 hours after we verify your payment.</p>
+                        </div>
+                        
+                        <div class="d-grid gap-2 mt-4">
+                            <a href="https://wa.me/923284336247?text=Hello,%20my%20name%20is%20{{ customer_name }}%20and%20I%20just%20placed%20an%20order%20for%20TipTop%20Growth%20Service%20with%20transaction%20ID:%20{{ transaction_id }}" class="btn btn-success" target="_blank">
+                                <i class="fab fa-whatsapp me-2"></i>Send Payment Proof on WhatsApp
+                            </a>
+                            <a href="{{ url_for('home') }}" class="btn btn-primary">Place Another Order</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
